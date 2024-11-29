@@ -91,3 +91,40 @@ print(ghost.lower())
 print(ghost.startswith("Spooky"))
 print(ghost.endswith("Boo"))
 print(ghost.split("k"))
+
+# 7: Conditions and if statements
+# 'and', 'or', 'not' are self explanatory
+# 'in' checks if object is in container
+# no brackets in python, uses indentation
+# 'is' checks if both point to same object
+x = 2
+print(x == 2)
+y = 2
+
+if x == 2 and y == 2:
+    print ("x = 2 and y = 2")
+
+container = [0,1,2,3,4,5]
+
+if x in container:
+    print ("x is in container")
+elif y in container:
+    pass
+else:
+    pass
+
+one = [1,1,1]
+uno = [1,1,1]
+if one is uno:
+    print ("one is uno")
+elif uno == one:
+    print ("one = uno")
+else:
+    print ("not the same")
+    
+# use this to have them point to same object
+one = uno
+if one is uno:
+    print ("one is uno")
+    
+# exercises are continued in learning2.py
