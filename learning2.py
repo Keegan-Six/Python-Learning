@@ -1,3 +1,7 @@
+import module
+import sys
+import numpy as np
+import pandas as pd
 # 8: Loops
 # 'for' and 'while' loops work similiar to other languages
 # can iterate over numbers using range() and xrange()
@@ -55,3 +59,37 @@ myobject.function()
 print(myobject.returnnum())
 
 # 10: Dictionaries
+# works with keys and values instead of indexes
+phonebook = {
+    "Keegan" : "319-720-5878",
+    "Jack" : "540-870-3408",
+    "Catherine" : "319-000-234"
+}
+del phonebook["Keegan"]
+
+for name, number in phonebook.items() :
+    print("Phone number of %s is %s" % (name,number))
+    
+# 11: Modules
+# Modules allow you to seperate code into different files
+# use import command
+
+module.function()
+
+# 12: Numpy Arrays
+# requires import, import numpy
+# may have to change PATH variable
+# good for element-wise calculations
+# allows subsetting
+
+height = [1.8, 1.7, 1.76, 1.89]
+weight = [81.32, 90.25, 78.31, 88.92]
+
+np_height = np.array(height)
+np_weight = np.array(weight)
+
+bmi = np_weight / np_height ** 2
+print(bmi)
+
+print(bmi[bmi > 25])
+
