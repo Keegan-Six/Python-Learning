@@ -45,7 +45,8 @@ def cardpoints(*card) :
 # checks if player busted
 def bust(points) :
     if points > 21 :
-        sys.exit("You busted...")
+        print("You busted...")
+        quit()
 
 card1 = pullcard()
 card2 = pullcard()
