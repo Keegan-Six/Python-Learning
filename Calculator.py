@@ -48,8 +48,25 @@ def division() :
     
 # button input director for other functions
 def percent() :
-    master("%","null")
-
+    percent()
+    
+def negative() :
+    negative()
+    
+# handles percentages
+def percent() :
+    global memory1
+    label = Label(root, text = memory1 + '%', width = 5, height = 1)
+    label.grid(row=0,column=0)
+    memory1 = int(memory1) / 100
+    
+# switches between negative and positive
+def negative() :
+    global memory1
+    memory1 = 0 - int(memory1)
+    label = Label(root, text = memory1, width = 20, height = 1)
+    label.grid(row=0,column=0,columnspan=5,sticky=E)
+    
 # clears current memory
 def clear() :
     global memory1
@@ -62,7 +79,8 @@ def clear() :
         operator = ""
     else :
         memory2 = ""
-
+    label = Label(root,text = "", width = 20, height = 1)
+    label.grid(row=0,column=0,columnspan=5,sticky=E)
     master("","null")
 
 # clears all memory
@@ -76,8 +94,22 @@ def clearE() :
     memory2 = ""
     operatorcheck = 0
     operator = ""
+    label = Label(root,text = "", width = 20, height = 1)
+    label.grid(row=0,column=0,columnspan=5,sticky=E)
     master("","null")
-
+    
+# checks if a decimal needs to be displayed for output
+def checkdecimalneeded(input) :
+    if (input.is_integer()) :
+        return int(input)
+    else :
+        return input
+    
+# creates label (top output)
+def createlabel(input) :
+    label = Label(root, text = input, width = 20, height = 1)
+    label.grid(row=0,column=0,columnspan=5,sticky=E)
+    
 # master computer, computes output
 def master(input, operation) :
     global operatorcheck
@@ -85,46 +117,50 @@ def master(input, operation) :
         if (operatorcheck == 0) :
             global memory1
             output = memory1 + input
-            label = Label(root, text = output, width = 5, height = 1)
-            label.grid(row=0,column=0)
+            createlabel(output)
             memory1 = output
         else :
             global memory2
             output = memory2 + input
-            label = Label(root, text = output, width = 5, height = 1)
-            label.grid(row=0,column=0)
+            createlabel(output)
             memory2 = output
     elif (operation == "operator") :
         global operator
+        if operatorcheck == 1 :
+            match operator :
+                case "+":
+                    memory1 = str(float(memory1) + float(memory2))
+                case "-":
+                    memory1 = str(float(memory1) - float(memory2))
+                case "x":
+                    memory1 = str(float(memory1) * float(memory2))
+                case "/":
+                    memory1 = str(float(memory1) / float(memory2))
+                case _: 
+                    createlabel("uh oh")
+            memory2 = ""
         operator = input
-        label = Label(root, text = operator, width = 5, height = 1)
-        label.grid(row=0,column=0)
+        createlabel(operator)
         operatorcheck = 1
     elif (operation == "equals") :
         match operator :
             case "+":
-                output = int(memory1) + int(memory2)
-                label = Label(root,text = output, width = 5, height = 1)
-                label.grid(row=0,column=0)
-                memory2 = str(output)
+                output = float(memory1) + float(memory2)
             case "-":
-                output = int(memory1) - int(memory2)
-                label = Label(root,text = output, width = 5, height = 1)
-                label.grid(row=0,column=0)
+                output = float(memory1) - float(memory2)
             case "x":
-                output = int(memory1) * int(memory2)
-                label = Label(root,text = output, width = 5, height = 1)
-                label.grid(row=0,column=0)
+                output = float(memory1) * float(memory2)
             case "/":
-                output = int(memory1) / int(memory2)
-                label = Label(root, text = output, width = 5, height = 1)
-                label.grid(row=0,column=0)
+                output = float(memory1) / float(memory2)
             case _: 
-                label = Label(root,text = "uh oh", width = 5, height = 1)
-                label.grid(row=0,column=0)
+                createlabel("uh oh")
+        output = checkdecimalneeded(output)
+        createlabel(output)
+        memory2 = ""
+        operator = ""
+        memory1 = str(output)
     else :
-        label = Label(root,text = input, width = 5, height = 1)
-        label.grid(row=0,column=0)
+        createlabel(input)
     
 # used to create buttons
 def createbutton(root, text, command, height, background, x, y) :
@@ -133,26 +169,27 @@ def createbutton(root, text, command, height, background, x, y) :
 
 # GUI setup
 root.title("Calculator")
-root.geometry("500x500")
-button1 = createbutton(root,"1",one,1,"light grey",10,5)
-button2 = createbutton(root,"2",two,1,"light grey",10,5)
-button3 = createbutton(root,"3",three,1,"light grey",10,5)
-button4 = createbutton(root,"4",four,1,"light grey",10,5)
-button5 = createbutton(root,"5",five,1,"light grey",10,5)
-button6 = createbutton(root,"6",six,1,"light grey",10,5)
-button7 = createbutton(root,"7",seven,1,"light grey",10,5)
-button8 = createbutton(root,"8",eight,1,"light grey",10,5)
-button9 = createbutton(root,"9",nine,1,"light grey",10,5)
-button0 = createbutton(root,"0",zero,1,"light grey",10,5)
-buttondot = createbutton(root,".",dot,1,"light grey",10,5)
+root.geometry("165x240")
+button1 = createbutton(root,"1",one,1,"light grey",12,5)
+button2 = createbutton(root,"2",two,1,"light grey",12,5)
+button3 = createbutton(root,"3",three,1,"light grey",12,5)
+button4 = createbutton(root,"4",four,1,"light grey",12,5)
+button5 = createbutton(root,"5",five,1,"light grey",12,5)
+button6 = createbutton(root,"6",six,1,"light grey",12,5)
+button7 = createbutton(root,"7",seven,1,"light grey",12,5)
+button8 = createbutton(root,"8",eight,1,"light grey",12,5)
+button9 = createbutton(root,"9",nine,1,"light grey",12,5)
+button0 = createbutton(root,"0",zero,1,"light grey",12,5)
+buttondot = createbutton(root,".",dot,1,"light grey",14,5)
 buttonequals = createbutton(root,"=",equal,1,"light grey",10,5)
 buttonplus = createbutton(root,"+",plus,1,"light grey",10,5)
-buttonminus = createbutton(root,"-",minus,1,"light grey",10,5)
-buttonmuiltiply = createbutton(root,"x",muiltiply,1,"light grey",10,5)
+buttonminus = createbutton(root,"-",minus,1,"light grey",12,5)
+buttonmuiltiply = createbutton(root,"x",muiltiply,1,"light grey",11,5)
 buttonpercent = createbutton(root,"%",percent,1,"light grey",10,5)
-buttonclear = createbutton(root,"C",clear,1,"light grey",10,5)
-buttonclearE = createbutton(root,"CE",clearE,1,"light grey",10,5)
-buttondivision = createbutton(root,"/",division,1,"light grey",10,5)
+buttonclear = createbutton(root,"C",clear,1,"light grey",12,5)
+buttonclearE = createbutton(root,"CE",clearE,1,"light grey",8,5)
+buttondivision = createbutton(root,"/",division,1,"light grey",12,5)
+buttonnegative = createbutton(root,"+/-",negative,1,"light grey",5,5)
 
 buttonpercent.grid(row=1,column=0)
 buttonclear.grid(row=1,column=1)
@@ -170,9 +207,11 @@ button7.grid(row=4,column=0)
 button8.grid(row=4,column=1)
 button9.grid(row=4,column=2)
 buttonplus.grid(row=4,column=3)
+buttonnegative.grid(row=5,column=0)
 button0.grid(row=5,column=1)
 buttondot.grid(row=5,column=2)
 buttonequals.grid(row=5,column=3)
 
+createlabel("")
 # runs GUI
 root.mainloop()
